@@ -1,20 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './app.css';
+import { db } from './appwriteConfig';
 
 export default function App() {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Implement REST API endpoints for user authentication', completed: false },
-    { id: 2, text: 'Fix memory leak in React useEffect hook', completed: false },
-    { id: 3, text: 'Refactor database queries for better performance', completed: false },
-    { id: 4, text: 'Write unit tests for payment gateway integration', completed: false },
-    { id: 5, text: 'Deploy Docker containers to production server', completed: false }
-  ]);
+  const [tasks, setTasks] = useState([]);
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(task => 
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ));
+  const getTasks = async () => {
+    try {
+      const { total, rows } = await db.listRows({
+        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+        tableId: import.meta.env.VITE_APPWRITE_TABLE_TODO,
+      });
+      // Debug log to see the structure
+      console.log('Fetched rows:', rows); 
+      setTasks(rows);
+    } catch (error) {
+      console.log('Error fetching tasks:', error);
+    }
   };
+
+  const toggleTask = async (taskId, currentCompleted) => {
+    try {
+      // Update in Appwrite
+      await db.updateRow({
+        databaseId: import.meta.env.VITE_APPWRITE_DB_ID,
+        tableId: import.meta.env.VITE_APPWRITE_TABLE_TODO,
+        rowId: taskId,
+        data: {
+          completed: !currentCompleted
+        }
+      });
+      
+      // Update local state
+      setTasks(tasks.map(task => 
+        task.$id === taskId ? { ...task, completed: !currentCompleted } : task
+      ));
+    } catch (error) {
+      console.log('Error toggling task:', error);
+    }
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, []);
 
   return (
     <div className="app">
@@ -22,9 +50,9 @@ export default function App() {
       <div className="task-list">
         {tasks.map(task => (
           <div 
-            key={task.id} 
+            key={task.$id} 
             className={`task-item ${task.completed ? 'completed' : ''}`}
-            onClick={() => toggleTask(task.id)}
+            onClick={() => toggleTask(task.$id, task.completed)}
           >
             <div className={`checkbox ${task.completed ? 'checked' : ''}`}>
               {task.completed && (
@@ -39,7 +67,7 @@ export default function App() {
                 </svg>
               )}
             </div>
-            <span className="task-text">{task.text}</span>
+            <span className="task-text">{task.body}</span>
           </div>
         ))}
       </div>
