@@ -1,0 +1,258 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0a0a0a;
+}
+
+.app {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0a0a0a;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.task-list {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task-item {
+  background: linear-gradient(135deg, #1e2139 0%, #1a1d35 100%);
+  border: 1px solid #2a2d45;
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: linear-gradient(135deg, #242842 0%, #1f223d 100%);
+  border-color: #3a3d55;
+  transform: translateY(-2px);
+}
+
+.task-item.completed {
+  opacity: 0.6;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #5b5e7a;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.checkbox.checked {
+  background-color: #6366f1;
+  border-color: #6366f1;
+}
+
+.task-text {
+  color: #d4d5dd;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #7a7c8f;
+}
+
+/* Mobile devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+  .app {
+    padding: 30px 16px;
+  }
+
+  .title {
+    font-size: 1.75rem;
+    margin-bottom: 30px;
+  }
+
+  .task-list {
+    gap: 12px;
+  }
+
+  .task-item {
+    padding: 16px 18px;
+    border-radius: 10px;
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .task-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .app {
+    padding: 40px 20px;
+  }
+
+  .title {
+    font-size: 2rem;
+    margin-bottom: 35px;
+  }
+
+  .task-list {
+    gap: 14px;
+  }
+
+  .task-item {
+    padding: 18px 22px;
+  }
+
+  .task-text {
+    font-size: 0.95rem;
+  }
+}
+
+/* Tablets (768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .app {
+    padding: 50px 32px;
+  }
+
+  .title {
+    font-size: 2.25rem;
+    margin-bottom: 40px;
+  }
+
+  .task-list {
+    max-width: 700px;
+    gap: 16px;
+  }
+
+  .task-item {
+    padding: 20px 24px;
+  }
+
+  .task-text {
+    font-size: 1rem;
+  }
+}
+
+/* Laptops/Desktops (992px and up) */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .app {
+    padding: 60px 40px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+  }
+
+  .task-list {
+    max-width: 800px;
+    gap: 18px;
+  }
+
+  .task-item {
+    padding: 22px 26px;
+  }
+}
+
+/* Large desktops and TVs (1400px and up) */
+@media (min-width: 1400px) and (max-width: 1919px) {
+  .app {
+    padding: 80px 60px;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-bottom: 60px;
+  }
+
+  .task-list {
+    max-width: 1000px;
+    gap: 22px;
+  }
+
+  .task-item {
+    padding: 28px 32px;
+    border-radius: 14px;
+  }
+
+  .checkbox {
+    width: 26px;
+    height: 26px;
+  }
+
+  .task-text {
+    font-size: 1.15rem;
+  }
+}
+
+/* Extra large screens and TVs (1920px and up) */
+@media (min-width: 1920px) {
+  .app {
+    padding: 100px 80px;
+  }
+
+  .title {
+    font-size: 3.5rem;
+    margin-bottom: 80px;
+  }
+
+  .task-list {
+    max-width: 1200px;
+    gap: 26px;
+  }
+
+  .task-item {
+    padding: 32px 40px;
+    border-radius: 16px;
+  }
+
+  .checkbox {
+    width: 28px;
+    height: 28px;
+  }
+
+  .task-text {
+    font-size: 1.3rem;
+  }
+}
